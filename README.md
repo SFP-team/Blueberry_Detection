@@ -16,7 +16,7 @@ Official repository accompanying the research publication:
 
 ## End-to-End Workflow Diagram
 
-The integrated phenotyping workflow illustrates raw image capture, object detection, SAM3 canopy segmentation, architectural feature extraction, binary masking, and precision mask-filtered detection:
+The integrated phenotyping workflow illustrates raw image capture, object detection, SAM3 canopy segmentation with manual corrections, architectural feature extraction, binary masking, and precision mask-filtered detection:
 
 ![End-to-End Workflow Grid](data/grid.png)
 
@@ -26,10 +26,10 @@ The integrated phenotyping workflow illustrates raw image capture, object detect
   Original high-resolution RGB image of the target blueberry plant captured under natural field conditions.
 
 * **(b) Full-Scene Object Detection**:  
-  Initial multi-class detection (immature berries, mature berries, flowers) using YOLOv8x/YOLOv11x with SAHI sliced inference across the entire raw frame.
+  Initial multi-class detection (immature berries and mature berries) using YOLOv8x with SAHI sliced inference across the entire raw frame.
 
 * **(c) SAM3 Zero-Shot Canopy Segmentation**:  
-  Target plant segmentation generated using SAM3 to isolate the target bush from neighboring rows, weeds, and ground cover.
+  Target plant segmentation generated using SAM3 to isolate the target bush from neighboring rows, weeds, and ground cover and manual correction of incomplete segmentation.
 
 * **(d) Canopy Architecture & Spatial Feature Extraction**:  
   Derived geometrical metrics including Convex Hull polygon, minimum bounding box dimensions (Height, Width), Canopy Area (px²), Surface Area, Circularity, and principal orientation axes.
@@ -50,18 +50,6 @@ Extracting spatial canopy geometry, Euclidean distance transforms, HSV color spa
 | :---: | :---: | :---: | :---: |
 | ![Canopy Metrics Overlay](03_plant_architecture/outputs/canopy_metric_visualization/sample_01_canopy_metrics.jpg) | ![Distance Transform Map](03_plant_architecture/outputs/distance_transform/sample_01_distance_transform.jpg) | ![HSV Vegetation Mask](03_plant_architecture/outputs/hsv_mask/sample_01_hsv_mask.jpg) | ![Silhouette Convex Hull](03_plant_architecture/outputs/silhouette_analysis/sample_01_silhouette_analysis.jpg) |
 | *Canopy Area & Solidity* | *Euclidean Distance Map* | *Color-Threshold Foliage* | *Convex Hull & Bounding Box* |
-
----
-
-## Abstract Summary & Key Results
-
-Quantifying blueberry fruit yield and maturity is critical for evaluating yield potential in breeding trials, but manual measurement remains slow, labor-intensive, and costly. Object detection networks offer high-throughput automated phenotyping, yet image-based counts systematically underestimate hand-harvested yield due to canopy occlusion.
-
-Key findings from our study across 32 southern highbush blueberry genotypes:
-- **Object Detection Performance**: YOLOv8x achieved an **mAP50 of 0.82** and an **mAP50–95 of 0.66**.
-- **External Validation**: Produced **F1-scores ranging from 0.74 to 0.91** across berry maturity stages.
-- **Canopy Occlusion**: Fruit occlusion varied between **51% and 95%** depending on cultivar canopy architecture.
-- **Yield Model Improvement**: Incorporating image-derived canopy architecture (area, height, width, solidity, distance transform) into Ridge regression improved yield estimation R² from **0.57 to 0.79**.
 
 ---
 
@@ -89,7 +77,6 @@ berry-vision/
     │   ├── canopy_metrics.py           # Canopy area, HSV, distance transform, & hull geometry
     │   ├── berry_sizing.py             # Bounding box sizing calculation
     │   └── visualization.py            # PyTorch GPU mask blending & visualization maps
-    ├── leafanalysis/                   # Core BlueberryAnalyzer package
     └── outputs/                        # CSV reports & sample metric visualization maps:
         ├── canopy_metric_visualization/
         ├── distance_transform/
