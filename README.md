@@ -93,7 +93,7 @@ berry-vision/
   * **`train.py`**: Multi-class Ultralytics YOLO training script.
 * **`02_sam3_segmentation/`**: Module 2 (SAM3 Zero-Shot Canopy Segmentation).
   * **`generate_sam3_masks.py`**: SAM3 mask generation and translucent overlay builder script.
-* **`03_plant_architecture/`**: Module 3 (Canopy Architecture & Size Extraction).
+* **`03_plant_architecture/`**: Module 3 (Canopy Architecture Extraction).
   * **`extract_plant_architecture.py`**: Main CLI entrypoint extracting canopy geometry, distance transforms, HSV masks, and berry bounding box size distributions.
 
 ---
