@@ -57,37 +57,44 @@ Extracting spatial canopy geometry, Euclidean distance transforms, HSV color spa
 
 ```text
 berry-vision/
-├── README.md                           # Documentation & execution guide
-├── requirements.txt                    # Project dependencies
-├── doc/                                # Validation dataset, error logs, and R statistical analysis
-│   ├── detection code.R                # Code used to run all analysis and visualization for the validation dataset
-│   ├── mask_filtered_err_counts.csv    # Mis-detection and false detection counts from the validation images
-│   └── validation-counts.xlsx          # Detections from trained model, ground-truth hand-harvest counts, & canopy architecture features
-├── data/                               # Workflow assets & sample benchmark images
-│   ├── grid.png                        # Integrated 6-panel workflow diagram (Panels a-f)
-│   └── sample_images/                  # Benchmark field images (sample_01 to sample_08)
-├── 01_detection_training/              # Module 1: Blueberry Detection & Model Training
-│   ├── download_flowerberry_dataset.py # Roboflow download, SAHI slicing & COCO-to-YOLO conversion
-│   ├── train.py                        # Multi-class YOLO training script
-│   └── outputs/                        # Detection CSVs & sample detection images
-├── 02_sam3_segmentation/               # Module 2: SAM3 Zero-Shot Canopy Mask Generation
-│   ├── generate_sam3_masks.py          # SAM3 mask generation & translucent overlay script
-│   ├── diagnostics/                    # Segmentation reports (CSV / JSON)
-│   └── sample_overlays/                # Translucent SAM3 canopy mask overlays
-└── 03_plant_architecture/              # Module 3: Canopy Architecture & Size Extraction
-    ├── extract_plant_architecture.py   # Main CLI entrypoint for canopy & size feature extraction
-    ├── utils/                          # Helper utilities:
-    │   ├── inference.py                # SAHI sliced prediction loader
-    │   ├── canopy_metrics.py           # Canopy area, HSV, distance transform, & hull geometry
-    │   ├── berry_sizing.py             # Bounding box sizing calculation
-    │   └── visualization.py            # PyTorch GPU mask blending & visualization maps
-    └── outputs/                        # CSV reports & sample metric visualization maps:
-        ├── canopy_metric_visualization/
-        ├── distance_transform/
-        ├── final_canopy_mask/
-        ├── hsv_mask/
-        └── silhouette_analysis/
+├── README.md
+├── requirements.txt
+├── doc/
+│   ├── detection code.R
+│   ├── mask_filtered_err_counts.csv
+│   └── validation-counts.xlsx
+├── data/
+│   ├── grid.png
+│   └── sample_images/
+├── 01_detection_training/
+│   ├── download_flowerberry_dataset.py
+│   ├── train.py
+│   └── outputs/
+├── 02_sam3_segmentation/
+│   ├── generate_sam3_masks.py
+│   ├── diagnostics/
+│   └── sample_overlays/
+└── 03_plant_architecture/
+    ├── extract_plant_architecture.py
+    ├── utils/
+    └── outputs/
 ```
+
+### Directory Details:
+
+* **`doc/`**: Validation dataset, error logs, and R statistical analysis scripts.
+  * **`detection code.R`**: Code used to run all analysis and visualization for the validation dataset.
+  * **`mask_filtered_err_counts.csv`**: Mis-detection and false detection counts from the validation images.
+  * **`validation-counts.xlsx`**: Contains detection from trained model, ground-truth hand-harvested count, and canopy architecture features for the validation dataset.
+* **`data/`**: Workflow assets and sample benchmark field images (`sample_01` to `sample_08`).
+  * **`grid.png`**: Integrated 6-panel workflow diagram (Panels a–f).
+* **`01_detection_training/`**: Module 1 (Blueberry Detection & Model Training).
+  * **`download_flowerberry_dataset.py`**: Roboflow dataset download, SAHI image slicing, and COCO-to-YOLO format conversion.
+  * **`train.py`**: Multi-class Ultralytics YOLO training script.
+* **`02_sam3_segmentation/`**: Module 2 (SAM3 Zero-Shot Canopy Segmentation).
+  * **`generate_sam3_masks.py`**: SAM3 mask generation and translucent overlay builder script.
+* **`03_plant_architecture/`**: Module 3 (Canopy Architecture & Size Extraction).
+  * **`extract_plant_architecture.py`**: Main CLI entrypoint extracting canopy geometry, distance transforms, HSV masks, and berry bounding box size distributions.
 
 ---
 
