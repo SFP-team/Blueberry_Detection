@@ -59,6 +59,10 @@ Extracting spatial canopy geometry, Euclidean distance transforms, HSV color spa
 berry-vision/
 ├── README.md                           # Documentation & execution guide
 ├── requirements.txt                    # Project dependencies
+├── doc/                                # Validation dataset, error logs, and R statistical analysis
+│   ├── detection code.R                # Code used to run all analysis and visualization for the validation dataset
+│   ├── mask_filtered_err_counts.csv    # Mis-detection and false detection counts from the validation images
+│   └── validation-counts.xlsx          # Detections from trained model, ground-truth hand-harvest counts, & canopy architecture features
 ├── data/                               # Workflow assets & sample benchmark images
 │   ├── grid.png                        # Integrated 6-panel workflow diagram (Panels a-f)
 │   └── sample_images/                  # Benchmark field images (sample_01 to sample_08)
