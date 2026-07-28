@@ -1,7 +1,7 @@
 # Image-Based Estimation of Blueberry Yield Incorporating External Validation and Canopy Architecture Under Field Conditions
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![YOLOv8 / YOLOv11](https://img.shields.io/badge/YOLO-v8%20%2F%20v11-green.svg)](https://github.com/ultralytics/ultralytics)
+[![YOLOv8](https://img.shields.io/badge/YOLO-v8%20%2F%20v11-green.svg)](https://github.com/ultralytics/ultralytics)
 [![SAHI Sliced Inference](https://img.shields.io/badge/SAHI-Sliced%20Inference-orange.svg)](https://github.com/obss/sahi)
 [![SAM3 Segmentation](https://img.shields.io/badge/SAM3-Zero--Shot%20Masks-purple.svg)](https://github.com/facebookresearch/segment-anything)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
