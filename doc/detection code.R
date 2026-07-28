@@ -23,7 +23,7 @@ base_path = getwd()
 # Load data and create maturity variables for cv & gt
 #========================================================
 
-vdt_mean <- read_excel("~/Library/CloudStorage/OneDrive-UniversityofFlorida/Project/Yield Estimate/Yield Validation/2026/Cor_val_img/output-260724-usman-masked/validation-counts.xlsx")
+vdt_mean <- read_excel(file.path(base_path, "validation-counts.xlsx"))
 
 merged <- vdt_mean %>%
   dplyr::select(
@@ -252,6 +252,142 @@ write_xlsx(
   col_names = TRUE,
   format_headers = TRUE,
   use_zip64 = FALSE
+)
+
+################################################################################
+
+#========================================================
+# Detection metrics in validation images & Counting error
+#========================================================
+
+# load data
+det <- read_csv(file.path(base_path, "mask_filtered_err_counts.csv"), show_col_types = FALSE)
+det$ID= det$image_id
+
+sel <- vdt_mean %>%
+  dplyr::select(
+    Genotype,ID,
+    berry.immature,berry.mature,total_detections,
+    Immature,Mature,Total
+  )
+
+# merge data
+sel1 = left_join(sel,det[,-1],"ID")
+
+###################
+# Detection metrics
+###################
+
+sel1_metrics <- sel1 %>%
+  mutate(
+    maturity = berry.mature / total_detections * 100,
+    precision_mature = berry.mature / (berry.mature + FG) * 100,
+    recall_mature    = berry.mature / (berry.mature + MR) * 100,
+    f1_mature = 2 * (precision_mature * recall_mature) / (precision_mature + recall_mature),
+    
+    precision_immature = berry.immature / (berry.immature + FR) * 100,
+    recall_immature    = berry.immature / (berry.immature + MG) * 100,
+    f1_immature = 2 * (precision_immature * recall_immature) / (precision_immature + recall_immature),
+    
+    precision_total_detections = total_detections / (total_detections + FR + FG) * 100,
+    recall_total_detections    = total_detections / (total_detections + MR +  MG) * 100,
+    f1_total_detections = 2 * (precision_total_detections * recall_total_detections) / (precision_total_detections + recall_total_detections),
+    
+    counting_error = abs(total_detections - (total_detections + MR + MG)) / (total_detections + MR + MG) * 100
+  )
+
+sel1_metrics
+
+###################################
+# Counting error vs Occlusion rate
+###################################
+
+sel1_metrics <- sel1_metrics %>%
+  mutate(
+    occlusion = Total - total_detections,
+    
+    Occlusion_Rate =
+      1 - (total_detections / Total)
+  )
+
+# mean across genotypes
+
+genotype_means <- sel1_metrics %>%
+  group_by(Genotype) %>%
+  summarise(
+    Occlusion_Rate = mean(Occlusion_Rate, na.rm = TRUE),
+    counting_error = mean(counting_error, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# plot
+
+p1 <- ggplot(
+  genotype_means,
+  aes(
+    x = counting_error,
+    y = Occlusion_Rate
+  )
+) +
+  geom_point(
+    size = 2.5,
+    alpha = 0.8,
+    color = "#2166ac"
+  ) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x,
+    se = FALSE,
+    linewidth = 0.7,
+    color = "black"
+  ) +
+  labs(
+    x = "Counting error (%)",
+    y = "Occlusion rate"
+  ) +
+  theme_bw(base_size = 9) +
+  theme(
+    axis.title = element_text(size = 20),
+    axis.text = element_text(size = 20, color = "black"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(
+      color = "grey90",
+      linewidth = 0.3
+    ),
+    plot.background = element_rect(
+      fill = "white",
+      color = "black",
+      linewidth = 0.5
+    ),
+    plot.margin = ggplot2::margin(4, 4, 4, 4)
+  )
+
+inset_r <- cor(
+  genotype_means$Occlusion_Rate,
+  genotype_means$counting_error,
+  use = "complete.obs"
+)
+
+p1 <- p1 +
+  labs(
+    title = paste0("r = ", round(inset_r, 2))
+  ) +
+  theme(
+    plot.title = element_text(
+      size = 20,
+      face = "bold",
+      hjust = 0.5
+    )
+  )
+p1
+
+# save plot
+ggsave(
+  filename = paste0(base_path, "/plot2/occl_vs_err.png"),
+  plot = p1,
+  width = 8,
+  height = 8,
+  dpi = 300
 )
 
 ################################################################################
