@@ -9,8 +9,9 @@
 Official repository accompanying the research publication:
 
 > **Image-Based Estimation of Blueberry Yield Incorporating External Validation and Canopy Architecture Under Field Conditions**  
-> *Paul Adunola, Tyler J. Schultz, Bruno Leme, M. Usman Maqbool Bhutta, Amman Mohit Minz, Raghav Rathi, Luis Felipe Ventorim Ferrão, Patricio Muñoz*  
-> **Blueberry Breeding and Genomics Lab, Horticultural Sciences Department, University of Florida**
+> *Paul Adunolaᵃ, Tyler J. Schultzᵇ, Raghav Rathiᵃ, Bruno Lemeᵃ, M. Usman Maqbool Bhuttaᵃ, Amman Mohit Minzᵃ, Luis Felipe Ventorim Ferrãoᵃ, Patricio Muñozᵃ*  
+> ᵃ **Blueberry Breeding and Genomics Lab, Horticultural Sciences Department, University of Florida**  
+> ᵇ **Research Computing, University of Florida**
 
 ---
 
@@ -93,7 +94,7 @@ berry-vision/
   * **`train.py`**: Multi-class Ultralytics YOLO training script.
 * **`02_sam3_segmentation/`**: Module 2 (SAM3 Zero-Shot Canopy Segmentation).
   * **`generate_sam3_masks.py`**: SAM3 mask generation and translucent overlay builder script.
-* **`03_plant_architecture/`**: Module 3 (Canopy Architecture Extraction).
+* **`03_plant_architecture/`**: Module 3 (Canopy Architecture & Size Extraction).
   * **`extract_plant_architecture.py`**: Main CLI entrypoint extracting canopy geometry, distance transforms, HSV masks, and berry bounding box size distributions.
 
 ---
@@ -175,7 +176,7 @@ If you use this repository, dataset, or methodology in your research, please cit
 ```bibtex
 @article{adunola2026blueberry,
   title={Image-Based Estimation of Blueberry Yield Incorporating External Validation and Canopy Architecture Under Field Conditions},
-  author={Adunola, Paul and Schultz, Tyler J. and Leme, Bruno and Bhutta, M. Usman Maqbool and Minz, Amman Mohit and Rathi, Raghav and Ferr{\~a}o, Luis Felipe Ventorim and Mu{\~n}oz, Patricio},
+  author={Adunola, Paul and Schultz, Tyler J. and Rathi, Raghav and Leme, Bruno and Bhutta, M. Usman Maqbool and Minz, Amman Mohit and Ferr{\~a}o, Luis Felipe Ventorim and Mu{\~n}oz, Patricio},
   journal={Horticultural Sciences Department, University of Florida},
   year={2026}
 }
